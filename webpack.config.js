@@ -9,6 +9,9 @@ module.exports = {
     filename: 'index_bundle.js',
     clean: true,
   },
+  resolve: {
+    extensions: ['.js', '.json', '.jsx'],
+  },
   module: {
     rules: [
       {
