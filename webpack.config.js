@@ -11,6 +11,9 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.json', '.jsx'],
+    alias: {
+      '@components': path.resolve(__dirname, 'src/components'),
+    },
   },
   module: {
     rules: [
