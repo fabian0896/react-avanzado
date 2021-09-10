@@ -8,6 +8,7 @@ module.exports = {
     path: path.resolve(__dirname, './dist'),
     filename: 'index_bundle.js',
     clean: true,
+    publicPath: '/',
   },
   resolve: {
     extensions: ['.js', '.json', '.jsx'],
@@ -34,5 +35,6 @@ module.exports = {
   })],
   devServer: {
     port: 3000,
+    historyApiFallback: true,
   },
 };

@@ -1,18 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 import { Category } from '..';
 import { List, Item } from './styled';
 
 const API_ENDPOINT = 'https://petgram-server-fab.vercel.app/categories';
 
-const ListOfCategories = () => {
+function useCategoryData() {
   const [categories, setCategories] = useState([]);
-  const [showFixed, setShowFixed] = useState(false);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     axios.get(API_ENDPOINT)
-      .then(({ data }) => setCategories(data));
+      .then(({ data }) => {
+        setCategories(data);
+        setLoading(false);
+      });
   }, []);
+  return { categories, loading };
+}
+
+const ListOfCategories = () => {
+  const [showFixed, setShowFixed] = useState(false);
+  const { categories, loading } = useCategoryData();
 
   useEffect(() => {
     const onScroll = () => {
@@ -29,14 +37,14 @@ const ListOfCategories = () => {
     };
   }, [showFixed]);
 
-  const renderList = (fixed) => (
-    <List className={fixed ? 'fixed' : ''}>
+  const renderList = (list, fixed) => (
+    <List fixed={fixed}>
       {
-          categories.map((category) => (
-            <Item key={category.id}>
+          list.map((category, index) => (
+            <Item key={category.id || index}>
               <Category
+                id={category.id}
                 cover={category.cover}
-                path={category.path}
                 emoji={category.emoji}
               />
             </Item>
@@ -45,10 +53,14 @@ const ListOfCategories = () => {
     </List>
   );
 
+  if (loading) {
+    return renderList(Array(6).fill({}));
+  }
+
   return (
     <>
-      {renderList()}
-      { showFixed && renderList(true)}
+      {renderList(categories)}
+      { showFixed && renderList(categories, true)}
     </>
   );
 };

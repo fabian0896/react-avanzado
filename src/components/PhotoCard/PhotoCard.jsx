@@ -1,36 +1,62 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FcLikePlaceholder } from 'react-icons/fc';
 
-import { ImgWraper, Img, Button } from './styled';
+import { useLocalStorage, useNearScreen } from '../../hooks';
+import {
+  ImgWraper,
+  Img,
+  Article,
+} from './styled';
 
-const DEFAULT_IMAGE = 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60';
+import { FavButton } from '..';
+import { ToggleLikeMutation } from '../../containers';
 
-const PhotoCard = ({ id, likes, src }) => (
-  <article>
-    <a href={`/detail/${id}`}>
-      <ImgWraper>
-        <Img src={src} alt={id} />
-      </ImgWraper>
-    </a>
-    <Button type="button">
-      <FcLikePlaceholder size="32" />
-      {likes}
-      {' '}
-      likes
-    </Button>
-  </article>
-);
+const PhotoCard = ({ id, likes, src }) => {
+  const [show, ref] = useNearScreen();
+  const [liked, setLiked] = useLocalStorage(id, 'likes');
+
+  return (
+    <Article ref={ref}>
+      {
+        show
+        && (
+        <>
+          <a href={`/?detail=${id}`}>
+            <ImgWraper>
+              <Img src={src} alt={id} />
+            </ImgWraper>
+          </a>
+          <ToggleLikeMutation>
+            {
+              (toggleLike) => {
+                const handleFavClick = () => {
+                  // eslint-disable-next-line no-unused-expressions
+                  !liked && toggleLike({
+                    variables: {
+                      input: { id },
+                    },
+                  });
+                  setLiked(!liked);
+                };
+                return <FavButton liked={liked} likes={likes} onClick={handleFavClick} />;
+              }
+            }
+          </ToggleLikeMutation>
+        </>
+        )
+      }
+    </Article>
+  );
+};
 
 PhotoCard.propTypes = {
   id: PropTypes.string.isRequired,
   likes: PropTypes.number,
-  src: PropTypes.string,
+  src: PropTypes.string.isRequired,
 };
 
 PhotoCard.defaultProps = {
   likes: 0,
-  src: DEFAULT_IMAGE,
 };
 
 export default PhotoCard;
