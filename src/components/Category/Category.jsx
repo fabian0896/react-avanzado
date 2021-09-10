@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Anchor, Image } from './styles';
 
 const DEFAULT_IMAGE = 'https://i.imgur.com/dJa0Hpl.jpg';
 
 const Category = ({ cover, path, emoji }) => (
   <div>
-    <a href={path}>
-      <img src={cover} alt="test" />
+    <Anchor href={path}>
+      <Image src={cover} alt="test" />
       {emoji}
-    </a>
+    </Anchor>
   </div>
 );
 
@@ -20,7 +21,7 @@ Category.propTypes = {
 Category.defaultProps = {
   cover: DEFAULT_IMAGE,
   path: '',
-  emoji: '?',
+  emoji: 'Pepe',
 };
 
 export default Category;
