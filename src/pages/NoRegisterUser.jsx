@@ -2,7 +2,7 @@ import React from 'react';
 
 const NoRegisterUser = () => (
   <div>
-    <h1>User no register</h1>
+    <h1>Usuario no registrado</h1>
   </div>
 );
 
