@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
+import AuthProvider from './context/authContext';
 
 import App from './App';
 
@@ -10,8 +11,10 @@ const client = new ApolloClient({
 });
 
 render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>,
+  <AuthProvider>
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+  </AuthProvider>,
   document.getElementById('app'),
 );

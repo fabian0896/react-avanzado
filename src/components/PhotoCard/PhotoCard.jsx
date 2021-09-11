@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { Link } from 'react-router-dom';
 import { useLocalStorage, useNearScreen } from '../../hooks';
 import {
   ImgWraper,
@@ -21,11 +21,11 @@ const PhotoCard = ({ id, likes, src }) => {
         show
         && (
         <>
-          <a href={`/?detail=${id}`}>
+          <Link to={`/detail/${id}`}>
             <ImgWraper>
               <Img src={src} alt={id} />
             </ImgWraper>
-          </a>
+          </Link>
           <ToggleLikeMutation>
             {
               (toggleLike) => {

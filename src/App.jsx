@@ -1,10 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import { Logo } from './components';
+import { Logo, NavBar, PrivateRoute } from './components';
 import { GlobalStyle } from './styles/GlobalStyles';
 
-import { Home } from './pages';
+import {
+  Home, Detail, NoRegisterUser, Favs,
+} from './pages';
 
 const App = () => (
   <Router>
@@ -12,9 +14,26 @@ const App = () => (
       <GlobalStyle />
       <Logo />
       <Switch>
-        <Route path="/pet/:id" component={Home} />
-        <Route path="/" component={Home} />
+        <PrivateRoute path="/user">
+          <NoRegisterUser />
+        </PrivateRoute>
+        <PrivateRoute path="/favs">
+          <Favs />
+        </PrivateRoute>
+        <Route path="/login">
+          <NoRegisterUser />
+        </Route>
+        <Route path="/detail/:detailId">
+          <Detail />
+        </Route>
+        <Route path="/pet/:id">
+          <Home />
+        </Route>
+        <Route exact path="/">
+          <Home />
+        </Route>
       </Switch>
+      <NavBar />
     </div>
   </Router>
 );
