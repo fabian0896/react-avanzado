@@ -6,3 +6,5 @@ export { default as Logo } from './Logo';
 export { default as FavButton } from './FavButton';
 export { default as NavBar } from './NavBar';
 export { default as PrivateRoute } from './PrivateRoute';
+export { default as UserForm } from './UserForm';
+export { default as ListOfFavs } from './ListOfFavs';

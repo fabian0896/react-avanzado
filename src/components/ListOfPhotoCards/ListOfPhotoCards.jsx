@@ -33,6 +33,7 @@ const ListOfPhotoCards = ({ categoryId }) => {
             id={photo.id}
             src={photo.src}
             likes={photo.likes}
+            liked={photo.liked}
           />
         ))
       }

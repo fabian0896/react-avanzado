@@ -1,35 +1,9 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext } from 'react';
 import PropTypes from 'prop-types';
 
+import { useAuthProvider } from '../hooks';
+
 const AuthContext = createContext();
-
-function useAuthProvider() {
-  const [user, setUser] = useState(false);
-
-  function singin() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        setUser(true);
-        resolve();
-      }, 2000);
-    });
-  }
-
-  function singout() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        setUser(false);
-        resolve();
-      }, 2000);
-    });
-  }
-
-  return {
-    user,
-    singin,
-    singout,
-  };
-}
 
 const AuthProvider = ({ children }) => {
   const auth = useAuthProvider();
